@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Login | {% endblock %}
+{% block navbar_button %}
+    <a href="{% url 'user_login' %}" class="justify-content-end btn btn-primary btn-md"
+           tabindex="-1" role="button" aria-disabled="true">Login</a>
+{% endblock navbar_button %}
+{% block content %}
+    <form method="post" action="#">
+        <div class="form-group">
+            <label for="username-field">Username</label>
+            <input id="username-field" name="username" placeholder="Username..">
+        </div>
+        <div class="form-group">
+            <label for="password-field">Password</label>
+            <input type="password" id="password-field" name="password" placeholder="Password..">
+        </div>
+        <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+    </form>
+{% endblock content %}
