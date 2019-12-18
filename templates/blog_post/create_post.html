@@ -1,0 +1,28 @@
+{% extends 'blog_post/home.html' %}
+{% block title %}Create | {% endblock %}
+{% block content %}
+    <div class="justify-content-center container mx-4 mt-2">
+        <form method="POST" action=".">
+            <div class="form-group">
+                <label for="post-title-input">Title</label>
+                <input type="text" class="form-control" id="post-title-input"
+                       name="title" placeholder="Enter your post Title">
+            </div>
+            <div class="form-group">
+                <label for="post-content">Post Content</label>
+                <textarea class="form-control" id="post-content" rows="6"
+                   name="content" cols="4" placeholder="You can type the post's content here">
+                </textarea>
+            </div>
+            <div class="form-group">
+                <label for="status-select">Status</label>
+                <select id="status-select" style="width:auto;" name="publish" class="form-control">
+                    {% for key, val in options.items %}
+                        <option value="{{ key }}">{{val}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="float-right btn btn-primary">Create</button>
+        </form>
+    </div>
+{% endblock content %}

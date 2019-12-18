@@ -12,6 +12,12 @@
     </div>
 {% endblock navbar_button %}
 {% block content %}
+    <div class="d-flex justify-content-end">
+        <a class="justify-content-end btn btn-primary"
+           href="{% url 'create_post' %}" role="button">
+            Create Post
+        </a>
+    </div>
     {% for post in posts %}
         <div class="container">
             <div class="align-items-start">
