@@ -1,7 +1,8 @@
-from django.urls import path, include
-from .views import create_post, blog_home
+from django.urls import path
+from .views import create_post, blog_home, update_post
 
 urlpatterns = [
     path('', blog_home, name='blog_home'),
     path('create/', create_post, name='create_post'),
+    path('<int:post_id>/update/', update_post, name='update_post'),
 ]

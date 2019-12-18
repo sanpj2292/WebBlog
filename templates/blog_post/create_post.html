@@ -1,28 +1,36 @@
 {% extends 'blog_post/home.html' %}
-{% block title %}Create | {% endblock %}
+{% block title %}{% if post %}Update{% else %}Create{% endif %} | {% endblock %}
 {% block content %}
     <div class="justify-content-center container mx-4 mt-2">
         <form method="POST" action=".">
             <div class="form-group">
                 <label for="post-title-input">Title</label>
                 <input type="text" class="form-control" id="post-title-input"
-                       name="title" placeholder="Enter your post Title">
+                       name="title" placeholder="Enter your post Title"
+                value="{{post.title}}">
             </div>
             <div class="form-group">
                 <label for="post-content">Post Content</label>
                 <textarea class="form-control" id="post-content" rows="6"
-                   name="content" cols="4" placeholder="You can type the post's content here">
+                   name="content" cols="4" placeholder="You can type the post's content here"
+                >{{post.content}}
                 </textarea>
             </div>
             <div class="form-group">
                 <label for="status-select">Status</label>
                 <select id="status-select" style="width:auto;" name="publish" class="form-control">
                     {% for key, val in options.items %}
-                        <option value="{{ key }}">{{val}}</option>
+                        {% if post.publish == key %}
+                            <option value="{{ key }}" selected>{{val}}</option>
+                        {% else %}
+                            <option value="{{ key }}">{{val}}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
-            <button type="submit" class="float-right btn btn-primary">Create</button>
+            <button type="submit" class="float-right btn btn-primary">
+            {% if post %}Update{% else %}Create{% endif %}
+            </button>
         </form>
     </div>
 {% endblock content %}

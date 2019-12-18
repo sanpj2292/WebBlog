@@ -20,4 +20,7 @@ class PostModelForm(forms.ModelForm):
         if len(title) > 200:
             raise forms.ValidationError(
                 message='Character count exceeds the limit value of 200, reduce the character count')
+        if PostModel.objects.filter(title__iexact=title).count() > 1:
+            raise forms.ValidationError(
+                message='Cannot update Posts with more than 1 Title(s)')
         return title
