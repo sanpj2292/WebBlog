@@ -23,6 +23,7 @@ def blog_home(request, *args, **kwargs):
     return render(request, 'blog_post/home.html', context)
 
 
+@login_required(login_url='/login/')
 @csrf_exempt
 def create_post(request):
     if request.method == 'POST':
@@ -38,6 +39,7 @@ def create_post(request):
     return render(request, 'blog_post/create_post.html', context=context)
 
 
+@login_required(login_url='/login/')
 @csrf_exempt
 def update_post(request, post_id=None):
     post_obj = PostModel.objects.filter(id=post_id).first()
