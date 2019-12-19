@@ -58,13 +58,13 @@
                     {% if request_user == post.author %}
                         <a class="btn btn-link"
                            href="{% url 'update_post' post_id=post.id %}">
-                            <i class="fa fa-edit"></i><small>Edit</small>
+                            <i class="fa fa-edit"></i><small class="ml-1">Edit</small>
                         </a>
                         <button type="button" class="btn btn-link"
                                 data-toggle="modal"
                                 style="color: red;"
                                 data-target="#exampleModalCenter">
-                            <i class="fa fa-trash"></i><small>Delete</small>
+                            <i class="fa fa-trash"></i><small class="ml-1">Delete</small>
                         </button>
                         {% include 'blog_post/delete_post.html' with post_title=post.title post_id=post.id %}
                     {% endif %}
@@ -76,6 +76,7 @@
                 <label class="p-2 justify-content-end label label-default"> Create at {{ post.created_at }}</label>
                 <label class="p-2 justify-content-end label label-default"> Update at {{ post.updated_at }}</label>
             </div>
+            {% if not forloop.last %}<hr>{% endif %}
         </div>
     {% endfor %}
 {% endblock content %}
