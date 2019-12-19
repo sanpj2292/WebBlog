@@ -34,11 +34,13 @@
     </div>
 {% endblock navbar_button %}
 {% block content %}
-    <div class="container d-flex justify-content-end">
-        <a class="justify-content-end btn btn-primary"
-           href="{% url 'create_post' %}" role="button">
-            Create Post
-        </a>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>List of Posts</h2>
+        </div>
+        <div class="col-md-4 offset-md-4 d-flex justify-content-end">
+            <a class="btn btn-primary" href="{% url 'create_post' %}" role="button">Create Post</a>
+        </div>
     </div>
     <hr>
     {% for post in posts %}
