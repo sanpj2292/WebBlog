@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Detail | {% endblock title %}
+{% block custom_styles %}
+        .fa-cog, .text-color {
+            color: ghostwhite;
+        }
+{% endblock custom_styles %}
+{% block content %}
+    <div class="pr-3 row justify-content-end">
+        <button class="btn btn-primary">
+            <a href="{% url 'update_post' post_id=post.id %}">
+                <i class="fa-cog fa fa-edit fa-xs"></i><small class="text-color ml-1">Edit</small>
+            </a>
+        </button>
+    </div>
+    <div class="paper container">
+        <div class="row container">
+            <h4>{{ post.title }} <span class="badge badge-{% if post.publish == 'publish' %}success{% elif post.publish == 'draft' %}secondary{% else %}danger{% endif %}">
+                        {{post.publish|title}}
+                    </span>
+            </h4>
+        </div>
+        <hr>
+        <div class="container">
+            <p>{{ post.content }}</p>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="p-2 justify-content-start label label-default"> Authored by {{ post.author.username }}</label>
+            </div>
+            <div class="col-md-3 offset-md-5">
+                <label class="label label-default"> Updated at {{ post.updated_at }}</label>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}

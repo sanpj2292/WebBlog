@@ -11,13 +11,11 @@
                 post_id : post_id,
             },  // gather form data
             success: function(data) {
-                    alert('Success');
                     $("#exampleModalCenter_"+post_id).modal("toggle");  // Use toggle to close modal
                     location.reload(true); // Reload the page
             },// end success callback
             error: function(data) {
                 console.log(data);
-                alert('Some Error Occurred');
                 // $("#exampleModalCenter_"+post_id).modal("toggle");  // Use toggle to close modal
             }
         };
@@ -36,12 +34,13 @@
     </div>
 {% endblock navbar_button %}
 {% block content %}
-    <div class="d-flex justify-content-end">
+    <div class="container d-flex justify-content-end">
         <a class="justify-content-end btn btn-primary"
            href="{% url 'create_post' %}" role="button">
             Create Post
         </a>
     </div>
+    <hr>
     {% for post in posts %}
         <div class="container">
             <div class="align-items-start">
@@ -66,12 +65,18 @@
                         {% include 'blog_post/delete_post.html' with post_title=post.title post_id=post.id %}
                     {% endif %}
                 {% endif %}
-                <p class="ml-4">{{post.content|truncatewords:50}}</p>
+                <p class="mx-4">{{post.content|truncatewords:50}}</p>
             </div>
-            <div class="d-flex align-items-end">
-                <label class="p-2 justify-content-start label label-default"> Authored by {{ post.author.username }}</label>
-                <label class="p-2 justify-content-end label label-default"> Create at {{ post.created_at }}</label>
-                <label class="p-2 justify-content-end label label-default"> Update at {{ post.updated_at }}</label>
+            <div class="row align-items-end">
+                <div class="col-md-3">
+                    <label class="p-2 justify-content-start label label-default"> Authored by {{ post.author.username }}</label>
+                </div>
+                <div class="col-md-4">
+                    <label class="p-2 justify-content-end label label-default"> Created at {{ post.created_at }}</label>
+                </div>
+                <div class="col-md-5">
+                    <label class="p-2 justify-content-end label label-default"> Updated at {{ post.updated_at }}</label>
+                </div>
             </div>
             {% if not forloop.last %}<hr>{% endif %}
         </div>

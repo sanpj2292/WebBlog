@@ -74,6 +74,7 @@ def delete_post(request):
 def detail_post(request, *args, **kwargs):
     if kwargs.get('post_id'):
         post_id = kwargs.get('post_id')
-        return JsonResponse({'success': f'Detail Page has come at last with {post_id}'})
+        post_obj = PostModel.objects.get(id=post_id)
+        return render(request, 'blog_post/detail_post.html', context={'post': post_obj})
     else:
         raise HttpResponseBadRequest('Bad Request, please try requesting in a valid manner')
