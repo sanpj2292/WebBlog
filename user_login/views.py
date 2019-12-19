@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 UserModel = get_user_model()
 
 
+@login_required(login_url='/login/')
 def user_logout(request):
     logout(request)
     return redirect('/login')
@@ -29,5 +30,5 @@ def user_login(request):
             messages.error(request, message='Invalid Credentials')
             return render(request, 'user_login/login.html', {})
         login(request, user=user_obj)
-        return redirect('posts/')
+        return redirect('blog_home')
     return render(request, 'user_login/login.html', {})

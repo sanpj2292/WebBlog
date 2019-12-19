@@ -1,5 +1,32 @@
 {% extends 'base.html' %}
 {% block title %}Home | {% endblock %}
+{% block delete_script %}
+    $("#delete-button").click(function(event) {
+        event.preventDefault();  // prevent default submission
+        url = $('#delete-modal').attr('form-url');
+        post_id = $("#delete-modal").attr('data-id');
+        console.log(url);
+        console.log(post_id);
+        var ajaxParams = {
+            type: 'POST',
+            url: url,  // your url endpoint
+            data: {
+                post_id : post_id,
+            },  // gather form data
+            success: function(data) {
+                    alert('Success');
+                    console.log(data);
+                    $("#exampleModalCenter").modal("toggle");  // Use toggle to close modal
+            },// end success callback
+            error: function(data) {
+                console.log(data);
+                alert('Some Error Occurred');
+                $("#exampleModalCenter").modal("toggle");  // Use toggle to close modal
+            }
+        };
+        $.ajax(ajaxParams);  // end ajax call
+    });
+{% endblock delete_script %}
 {% block navbar_button %}
     <div class="d-flex justify-content-end">
         {% if user.is_authenticated %}
@@ -33,6 +60,13 @@
                            href="{% url 'update_post' post_id=post.id %}">
                             <i class="fa fa-edit"></i><small>Edit</small>
                         </a>
+                        <button type="button" class="btn btn-link"
+                                data-toggle="modal"
+                                style="color: red;"
+                                data-target="#exampleModalCenter">
+                            <i class="fa fa-trash"></i><small>Delete</small>
+                        </button>
+                        {% include 'blog_post/delete_post.html' with post_title=post.title post_id=post.id %}
                     {% endif %}
                 {% endif %}
                 <p class="ml-4">{{post.content|truncatewords:50}}</p>
