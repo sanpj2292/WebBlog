@@ -63,8 +63,17 @@ def delete_post(request):
         try:
             post_obj = PostModel.objects.get(pk=post_id)
             post_obj.delete()
-            return JsonResponse({'success': 'Successful Deletion of Post'})
+            return JsonResponse({'success': 'Blog Post Deleted Successfully'})
         except:
             return JsonResponse({'error': 'Error Occurred in Deletion'}, status_code=500)
     else:
         raise HttpResponseBadRequest(content='GET Request not allowed', content_type="application/json")
+
+
+@login_required(login_url='user_login')
+def detail_post(request, *args, **kwargs):
+    if kwargs.get('post_id'):
+        post_id = kwargs.get('post_id')
+        return JsonResponse({'success': f'Detail Page has come at last with {post_id}'})
+    else:
+        raise HttpResponseBadRequest('Bad Request, please try requesting in a valid manner')
