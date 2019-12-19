@@ -23,31 +23,6 @@
         };
         $.ajax(ajaxParams);  // end ajax call
     };
-{#    $("#delete-button").click(function(event) {#}
-{#        event.preventDefault();  // prevent default submission#}
-{#        url = $('#delete-modal').attr('form-url');#}
-{#        post_id = $("#delete-modal").attr('data-id');#}
-{#        console.log(url);#}
-{#        console.log(post_id);#}
-{#        var ajaxParams = {#}
-{#            type: 'POST',#}
-{#            url: url,  // your url endpoint#}
-{#            data: {#}
-{#                post_id : post_id,#}
-{#            },  // gather form data#}
-{#            success: function(data) {#}
-{#                    alert('Success');#}
-{#                    console.log(data);#}
-{#                    $("#exampleModalCenter").modal("toggle");  // Use toggle to close modal#}
-{#            },// end success callback#}
-{#            error: function(data) {#}
-{#                console.log(data);#}
-{#                alert('Some Error Occurred');#}
-{#                $("#exampleModalCenter").modal("toggle");  // Use toggle to close modal#}
-{#            }#}
-{#        };#}
-{#        $.ajax(ajaxParams);  // end ajax call#}
-{#    });#}
 {% endblock delete_script %}
 {% block navbar_button %}
     <div class="d-flex justify-content-end">
