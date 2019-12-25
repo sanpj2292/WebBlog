@@ -29,6 +29,7 @@ def user_login(request):
         if not user_obj.check_password(pwd):
             messages.error(request, message='Invalid Credentials')
             return render(request, 'user_login/login.html', {})
-        login(request, user=user_obj)
+        # To avoid Multiple Backend Error in auth
+        login(request, user=user_obj, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('blog_home')
     return render(request, 'user_login/login.html', {})

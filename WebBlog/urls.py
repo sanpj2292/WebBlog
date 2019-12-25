@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include('blog_post.urls')),
     path('login/', user_login, name='user_login'),
+    path('', include('social_django.urls', namespace='social')),
     path('logout/', user_logout, name='user_logout'),
 ]

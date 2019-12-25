@@ -31,6 +31,10 @@ class Post(models.Model):
             self.slug = slugify(self.title)
         super(Post, self).save(*args, **kwargs)
 
+    class Meta:
+        # Change in Table Name in DB
+        db_table = 'blog_post'
+
     def __str__(self):
         return smart_text(self.title)
 
