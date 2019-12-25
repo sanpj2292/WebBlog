@@ -24,12 +24,23 @@
 {% endblock delete_script %}
 {% block navbar_button %}
     <div class="d-flex justify-content-end">
-        {% if user.is_authenticated %}
-            <span class="d-flex align-items-center justify-content-end navbar-text mr-2">
-                Logged in as {{ user.username}}
-            </span>
+        {% if backends.associated %}
+            {% for ass in backends.associated %}
+                {% if ass.provider == 'facebook' %}
+                    <span class="d-flex align-items-center justify-content-end navbar-text mr-2">
+                        Logged in as {{ user.username}} via {{ ass.provider|capfirst }}
+                    </span>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% if user.is_authenticated %}
+                <span class="d-flex align-items-center justify-content-end navbar-text mr-2">
+                    Logged in as {{ user.username}}
+                </span>
+            {% endif %}
         {% endif %}
-        <a href="{% url 'user_logout' %}" class="d-flex justify-content-end btn btn-link btn-lg"
+        <a href="{% url 'user_logout' %}"
+           class="d-flex justify-content-end btn btn-link btn-lg"
            tabindex="-1" role="button" aria-disabled="true">Logout</a>
     </div>
 {% endblock navbar_button %}

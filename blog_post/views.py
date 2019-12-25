@@ -67,7 +67,7 @@ def delete_post(request):
         except:
             return JsonResponse({'error': 'Error Occurred in Deletion'}, status_code=500)
     else:
-        raise HttpResponseBadRequest(content='GET Request not allowed', content_type="application/json")
+        return HttpResponseBadRequest(content='GET Request not allowed', content_type="application/json")
 
 
 @login_required(login_url='user_login')

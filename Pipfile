@@ -9,6 +9,12 @@ verify_ssl = true
 django = "*"
 asgiref = "==3.2.3"
 sqlparse = "==0.3.0"
+django-oauth-toolkit = "*"
+django-cors-middleware = "*"
+virtualenv = "*"
+psycopg2 = "*"
+social-auth-app-django = "*"
+pyyaml = "*"
 
 [requires]
 python_version = "3.7"

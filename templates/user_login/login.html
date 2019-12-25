@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Login | {% endblock %}
+{% block custom_styles %}
+    .btn a, .btn a:hover {
+          color: white;
+          text-decoration: none ;
+    }
+{% endblock custom_styles %}
 {% block navbar_button %}
     <a href="{% url 'user_login' %}" class="justify-content-end btn btn-primary btn-md"
            tabindex="-1" role="button" aria-disabled="true">Login</a>
@@ -16,4 +22,12 @@
         </div>
         <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
     </form>
+    <p>(OR)</p>
+    <div class="row">
+        <div class="col-md-8 justify-content-start mx-auto social-container my-2 order-md-1">
+            <button class="btn btn-primary mb-2">
+                <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+            </button>
+        </div>
+    </div>
 {% endblock content %}

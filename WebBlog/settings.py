@@ -11,22 +11,26 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import yaml
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# The yaml config file has been used only for security reason(s)
+with open('blog_settings.yaml', mode='r') as set_file:
+    settings_list = yaml.load(set_file, Loader=yaml.FullLoader)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'jo_pv_t7gnyovwag%fn)4=*oid_tq0ono7up%x@xqa(wjf4ep+'
+SECRET_KEY = settings_list.get('settings').get('secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = settings_list.get('settings').get('ENV_TYPE') == 'development'
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -37,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'user_login',
     'blog_post',
 ]
@@ -65,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
             ],
         },
     },
@@ -72,17 +78,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'WebBlog.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# Migrated from SqlLite to Postgres
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': settings_list.get('POSTGRES').get('DB_USER'),
+        'PASSWORD': settings_list.get('POSTGRES').get('DB_PWD'),
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -102,7 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -116,8 +124,40 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# Post Authentication Redirect URL
+LOGIN_REDIRECT_URL = '/posts'
+LOGOUT_URL = 'logout'
+# Post Logout Redirect URL
+LOGOUT_REDIRECT_URL = 'login'
+
+# Social Auth Authentication for Facebook
+SOCIAL_AUTH_FACEBOOK_KEY = settings_list.get('facebook').get('app_id')  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = settings_list.get('facebook').get('secret_key')  # App Secret
+# SOCIAL_AUTH_FACEBOOK_SCOPE contains a list of permissions to access the data properties our application requires
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link']  # add this
+# SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS has a key — fields — where the value is a list of attributes that
+# should be returned by Facebook when the user has successfully logged in
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {  # add this
+    'fields': 'id, name, email, picture.type(large), link'
+}
+'''
+When a user logs in using Facebook, the Facebook API returns the data requested in 
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS. 
+To store the data in the database, we need to specify them in SOCIAL_AUTH_FACEBOOK_EXTRA_DATA
+'''
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [  # add this
+    ('name', 'name'),
+    ('email', 'email'),
+    ('picture', 'picture'),
+    ('link', 'profile_url'),
+]
