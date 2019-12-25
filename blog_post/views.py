@@ -77,4 +77,4 @@ def detail_post(request, *args, **kwargs):
         post_obj = PostModel.objects.get(id=post_id)
         return render(request, 'blog_post/detail_post.html', context={'post': post_obj})
     else:
-        raise HttpResponseBadRequest('Bad Request, please try requesting in a valid manner')
+        return HttpResponseBadRequest('Bad Request, please try requesting in a valid manner')
